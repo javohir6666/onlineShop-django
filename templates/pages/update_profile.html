@@ -1,0 +1,136 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+<div class="row flex-lg-nowrap">
+
+  <div class="col">
+    <div class="row">
+      <div class="col mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="e-profile">
+              <div class="row">
+                <div class="col-6 col-sm-auto mb-3">
+                    <div class="mx-auto" style="width: 140px;">
+                        <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                            <img src="{{request.user.avatar.url}}" />
+                        </div>
+                  </div>
+                </div>
+                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                  <div class="text-center text-sm-left mb-2 mb-sm-0">
+                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{request.user.get_full_name}}</h4>
+                    <p class="mb-0">{{request.user.email}}</p>
+                    <div class="text-muted"><small>Registered date: <b>{{request.user.date_joined|date:"SHORT_DATE_FORMAT"}} {{request.user.date_joined|time:"h:i"}}</b></small></div>
+                    <div class="mt-2">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fa fa-fw fa-camera"></i>
+                        <span>Change Photo</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="text-center text-sm-right">
+                    <span class="badge badge-danger">administrator</span>
+                    <div class="text-muted"><small>Last seen:<b> {{request.user.last_login|date:"SHORT_DATE_FORMAT"}} {{request.user.last_login|time:"h:i"}}</b></small></div>
+                  </div>
+                </div>
+              </div>
+              <ul class="nav nav-tabs">
+                <li class="nav-item active"><a class="active nav-link">Settings</a></li>
+              </ul>
+              <div class="tab-content pt-3">
+                <div class="tab-pane active">
+                  <form class="form" method='POST'>
+                    <div class="row">
+                      <div class="col">
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Fist Name</label>
+                              <input class="form-control" type="text" name="fist_name" placeholder="Enter your first name" value="{{request.user.first_name}}">
+                            </div>
+                          </div>
+
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Last Name</label>
+                              <input class="form-control" type="text" name="last_name" placeholder="Enter your last name" value="{{request.user.last_name}}">
+                            </div>
+                          </div>
+
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Username</label>
+                              <input class="form-control" type="text" name="username" placeholder="Username" value="{{request.user.username}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Email</label>
+                              <input class="form-control" type="email" value="{{request.user.email}}" placeholder="Email">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Phone</label>
+                                <input class="form-control" type="text" value="{{request.user.phone}}" placeholder="Phone">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Telegram</label>
+                                <input class="form-control" type="text" value="{{request.user.telegram}}" placeholder="Telegram">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <select class="form-control" aria-label="Default select example">
+                                    <option selected value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                  </select>
+                              </div>
+                            </div>
+                          </div>
+
+                        <div class="row">
+                          <div class="col mb-3">
+                            <div class="form-group">
+                              <label>About</label>
+                              <textarea disabled class="form-control" rows="5" placeholder="My Bio"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col d-flex justify-content-end">
+                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock content %}
+

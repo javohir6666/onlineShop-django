@@ -1,0 +1,25 @@
+{% if user.is_authenticated %}
+<div class="btn-group">
+    <button type="button" class="btn btn-sm btn-light text-uppercase dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> {{request.user.first_name}}</button>
+    <div class="dropdown-menu dropdown-menu-right">
+        <button class="dropdown-item" type="button"disabled><i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{request.user.first_name}} {{request.user.last_name}}</button>
+        <div class="dropdown-divider"></div>
+        {% if request.user.is_superuser %}
+        <button class="dropdown-item" type="button"><i class="fas fa-house-damage"></i> </i>&nbsp;Admin Panel <span class="badge bg-danger" style="color:#fff;">4</span></button>
+        <div class="dropdown-divider"></div>
+        {% endif %}
+        <a class="dropdown-item" href="{% url 'users:profile' request.user.username %}"><i class="fa fa-wrench" aria-hidden="true"></i>&nbsp;Settings</button>
+        <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a>
+    </div>
+</div>
+{% else %}
+<div class="btn-group">
+<button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Account</button>
+<div class="dropdown-menu dropdown-menu-right">
+    <a class="dropdown-item {% if request.path == '/users/login/' %}active {% endif %}" href="{% url 'login' %}" ><i class="fa fa-sign-in" aria-hidden="true"></i> &nbsp;Sign in</a>
+    <button class="dropdown-item {% if request.path == 'signup' %}active {% endif %}" type="button"><i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp;Sign up</button>
+</div>
+</div>
+{% endif %}
+
+

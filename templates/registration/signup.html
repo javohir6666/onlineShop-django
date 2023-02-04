@@ -1,0 +1,59 @@
+<div class="bg-light p-30 mb-5">
+    <form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label><i class="fa fa-pencil" aria-hidden="true"></i> First Name</label>
+            <input class="form-control" name="first_name" type="text" placeholder="John">
+        </div>
+        <div class="col-md-6 form-group">
+            <label><i class="fa fa-pencil" aria-hidden="true"></i> Last Name</label>
+            <input class="form-control" name="last_name" type="text" placeholder="Doe">
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
+            <input class="form-control" name="email" type="email" placeholder="Email">
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label><i class="fas fa-vcard    "></i> Username</label>
+            <input class="form-control" name="username" type="text" placeholder="Username">
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label><i class="fa fa-lock" aria-hidden="true"></i> Password</label>
+            <input class="form-control" name="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label><i class="fa fa-lock" aria-hidden="true"></i> Retry Password</label>
+            <input class="form-control" name="password2" type="password" placeholder="Password">
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label><i class="fa fa-user" aria-hidden="true"></i> Gender</label>
+            <select name="gender" class="custom-select">
+                <option selected>Male</option>
+                <option>Female</option>
+            </select>
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label><i class="fa fa-address-book" aria-hidden="true"></i> Address</label>
+            <input class="form-control" name="address" type="text" placeholder="ex:New York">
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label><i class="fa fa-phone" aria-hidden="true"></i> Phone</label>
+            <input class="form-control" name="phone" type="text" placeholder="12345678">
+        </div>
+
+        <div class="col m-auto">
+            <button type="submit" class="btn mt-3 btn-block btn-primary" value="sign_up" name="submit">
+               <i class="fa fa-check" aria-hidden="true"></i> Register
+            </button>
+        </div>
+    </div>
+    </form>
+</div>

@@ -1,0 +1,36 @@
+{% load static %}
+<div class="container-fluid pt-5 pb-3">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+    <div class="row px-xl-5">
+        {% for product in products %}
+        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+            <div class="product-item bg-light mb-4">
+                <div class="product-img position-relative overflow-hidden" style="background-color:#fff;">
+                    {% if product.productimage_set.exists %}
+                    <img class="img-fluid w-100" src="{{product.productimage_set.first.image.url}}" alt="{{product.title}} - {{product.category.name}}">
+                    {% endif %}
+                    <div class="product-action">
+                        <a class="btn btn-outline-dark btn-square" href="" style="border-radius:8px"><i class="fa fa-shopping-cart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href="" style="border-radius:8px"><i class="far fa-heart"></i></a>
+                    </div>
+                </div>
+                <a href="{% url 'main:category' product.category.name %}" class="btn btn-sm btn-primary mt-2 mx-1">{{product.category.name}}</a>
+                <div class="text-center py-4">
+                    <a class="h6 text-decoration-none text-truncate" href="{% url 'product:product_detail' product.id %}">{{product.title}}</a>
+                    <div class="d-flex align-items-center justify-content-center mt-2">
+                        <h5>${{product.price}}</h5>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-1">
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small>(99)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
