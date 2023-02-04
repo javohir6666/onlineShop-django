@@ -2,10 +2,13 @@ from django.shortcuts import render
 from django.views import View
 from products.models import Product, Category
 from django.shortcuts import get_object_or_404
-
+import random
 def for_all_pages(request):
     categories = Category.objects.all()
+    items = list(Category.objects.all())
+    random_items = random.sample(items, 3)
     return {'categories':categories,
+            'random_items':random_items,
             }
 
 
