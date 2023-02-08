@@ -1,0 +1,50 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Saved Products{% endblock title %}
+{% block content %}
+
+
+    <!-- Products Start -->
+    <div class="container-fluid pt-5 pb-3">
+        <h3 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+            <span class="bg-secondary pr-3">Saved Products</span>
+        </h3>
+        <div class="row px-xl-5">
+            {% for product in saveds %}
+            {% if product != product.product %}
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <div class="product-item bg-light mb-4">
+                    <div class="product-img position-relative overflow-hidden" style="background-color:#fff;">
+                        {% if product.product.productimage_set.exists %}
+                        <img class="img-fluid w-100" src="{{product.product.productimage_set.first.image.url}}" alt="{{product.product.title}} - {{product.product.category.name}}">
+                        {% endif %}
+                        <div class="product-action">
+                            <a class="btn btn-outline-dark btn-square" href="" style="border-radius:8px"><i class="fa fa-shopping-cart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href="{% url 'users:addremovesaved' product.product.id %}" style="border-radius:8px"><i class="far fa-heart"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center py-4">
+                        <a class="h6 text-decoration-none text-truncate" href="{% url 'product:product_detail' product.product.id %}">{{product.product.title}}</a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
+                            <h5>${{product.product.price}}</h5>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center mb-1">
+                            <small class="fa fa-star text-primary mr-1"></small>
+                            <small class="fa fa-star text-primary mr-1"></small>
+                            <small class="fa fa-star text-primary mr-1"></small>
+                            <small class="fa fa-star text-primary mr-1"></small>
+                            <small class="fa fa-star text-primary mr-1"></small>
+                            <small>(99)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <h4 class="text-muted">No products in this category</h4>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Products End -->
+{% endblock content %}

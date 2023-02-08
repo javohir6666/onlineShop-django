@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from products.models import Product
-from .models import CustomUser
+from .models import CustomUser, Saved
 from django.views import View
 from django.shortcuts import get_object_or_404
 
@@ -78,3 +78,27 @@ class UpdateProfileView(View, LoginRequiredMixin):
                 messages.error(request, "Failed to updating account")
                 return HttpResponseRedirect(f"/users/profile/{request.user}")
         return render(request, 'pages/update_profile.html',{'user': user})
+    
+
+class AddRemoveSavedView(LoginRequiredMixin, View):
+    login_url = 'login'
+    def get(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+        saved_product = Saved.objects.filter(author=request.user, product=product)
+        if saved_product:
+            saved_product.delete()
+            messages.info(request, "Removed saved product")
+        
+        else:
+            Saved.objects.create(author=request.user, product=product)
+            messages.success(request, "Added saved product")
+        return redirect(request.META.get("HTTP_REFERER")) # Redirect to request.path
+            
+            
+class SavedView(LoginRequiredMixin, View):
+    login_url = 'login'
+    def get(self, request):
+        saveds = Saved.objects.filter(author=request.user)
+        
+        return render(request, 'pages/saveds.html', {"saveds":saveds})
+    

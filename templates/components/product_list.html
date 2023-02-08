@@ -11,7 +11,7 @@
                     {% endif %}
                     <div class="product-action">
                         <a class="btn btn-outline-dark btn-square" href="" style="border-radius:8px"><i class="fa fa-shopping-cart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href="" style="border-radius:8px"><i class="far fa-heart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href="{% url 'users:addremovesaved' product.id %}" style="border-radius:8px"><i class="far fa-heart"></i></a>
                     </div>
                 </div>
                 <a href="{% url 'main:category' product.category.name %}" class="btn btn-sm btn-primary mt-2 mx-1">{{product.category.name}}</a>
