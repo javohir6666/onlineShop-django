@@ -137,8 +137,8 @@
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                            Cart</button>
+                        <a href="{{product.url}}" blank="True" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                            Cart</a>
                     </div>
                     <div class="d-flex pt-2">
                         <strong class="text-dark mr-2">Share on:</strong>
@@ -167,6 +167,7 @@
                         <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Description</a>
                         <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Information</a>
                         <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-4">Comments ({{ product.comment_set.count }}) </a>
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tab-pane-1">
@@ -263,6 +264,79 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="tab-pane fade" id="tab-pane-4">
+                            <div class="row">
+                                <!-- Comment Start -->
+                                <div class="container-fluid pt-5 pb-3">
+                                {% if request.user.is_authenticated %}                      
+                                    <div class="container">
+                                        <div class="row bootstrap snippets bootdeys">
+                                            <div class="col-md-8 col-sm-12">
+                                                <div class="comment-wrapper">
+                                                    <div class="panel panel-info">
+                                                        <div class="panel-heading">
+                                                            Comment panel
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <form action="{% url 'product:create_comment' product.id %}" method="POST">
+                                                                {% csrf_token %}
+                                                            <textarea class="form-control" name="body" placeholder="write a comment..." rows="3"></textarea>
+                                                            <br>
+                                                            <button type="submit" class="btn btn-info pull-right">Add comment</button>
+                                                            </form>
+                                                            <div class="clearfix"></div>
+                                                            <hr>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="media-list">
+
+                                                    {% for comment in product.comment_set.all %}
+                                                    {% if comment.author == request.user %}
+                                                    <li class="media mb-3 text-right">
+                                                        <div class="media-body">
+                                                            <strong class="text-success">@<a href="{% url 'users:profile' comment.author.username %}">{{comment.author}}</a></strong>
+                                                            <p>
+                                                                {{comment.body|safe}}
+                                                            </p>
+                                                            <span class="text-muted pull-right">
+                                                                <small class="text-muted">{{comment.created_at|date:"SHORT_DATE_FORMAT"}} {{comment.created_at|time:"h:i"}}</small>
+                                                            </span>
+                                                        </div>
+                                                        <img src="{{comment.author.avatar.url}}" alt="" width="50" class="mx-3 mt-3 rounded-circle">
+                                                    </li>
+                                                    <hr>
+                                                    {% else %}
+                                                    <li class="media mb-3">
+                                                        <img src="{{comment.author.avatar.url}}" alt="" width="50" class="mx-3 mt-3 rounded-circle">
+                                                        <div class="media-body">
+                                                            <strong class="text-success">@<a href="{% url 'users:profile' comment.author.username %}">{{comment.author}}</a></strong>
+                                                            <p>
+                                                                {{comment.body|safe}}
+                                                            </p>
+                                                            <span class="text-muted pull-right">
+                                                                <small class="text-muted">{{comment.created_at|date:"SHORT_DATE_FORMAT"}} {{comment.created_at|time:"h:i"}}</small>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                    <hr>
+                                                    {% endif %}
+                                                    {% endfor %}
+                
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                <!-- Comment END -->
+                                {% else %}
+                                <h4 class="text-center text-muted">For commenting please sign in</h4>
+                                {% endif %}
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -270,76 +344,7 @@
     </div>
     <!-- Shop Detail End -->
 
-    <!-- Comment Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <h3 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
-            <span class="bg-secondary pr-3">Comments</span>
-        </h3>
-    {% if request.user.is_authenticated %}
-    <div class="container">
-        <div class="row bootstrap snippets bootdeys">
-            <div class="col-md-8 col-sm-12">
-                <div class="comment-wrapper">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            Comment panel
-                        </div>
-                        <div class="panel-body">
-                            <form action="{% url 'product:create_comment' product.id %}" method="POST">
-                                {% csrf_token %}
-                            <textarea class="form-control" name="body" placeholder="write a comment..." rows="3"></textarea>
-                            <br>
-                            <button type="submit" class="btn btn-info pull-right">Add comment</button>
-                            </form>
-                            <div class="clearfix"></div>
-                            <hr>
-                            <ul class="media-list">
 
-                                {% for comment in product.comment_set.all %}
-                                {% if comment.author == request.user %}
-                                <li class="media mb-3 text-right">
-                                    <div class="media-body">
-                                        <strong class="text-success">@<a href="{% url 'users:profile' comment.author.username %}">{{comment.author}}</a></strong>
-                                        <p>
-                                            {{comment.body|safe}}
-                                        </p>
-                                        <span class="text-muted pull-right">
-                                            <small class="text-muted">{{comment.created_at|date:"SHORT_DATE_FORMAT"}} {{comment.created_at|time:"h:i"}}</small>
-                                        </span>
-                                    </div>
-                                    <img src="{{comment.author.avatar.url}}" alt="" width="50" class="mx-3 mt-3 rounded-circle">
-                                </li>
-                                <hr>
-                                {% else %}
-                                <li class="media mb-3">
-                                    <img src="{{comment.author.avatar.url}}" alt="" width="50" class="mx-3 mt-3 rounded-circle">
-                                    <div class="media-body">
-                                        <strong class="text-success">@<a href="{% url 'users:profile' comment.author.username %}">{{comment.author}}</a></strong>
-                                        <p>
-                                            {{comment.body|safe}}
-                                        </p>
-                                        <span class="text-muted pull-right">
-                                            <small class="text-muted">{{comment.created_at|date:"SHORT_DATE_FORMAT"}} {{comment.created_at|time:"h:i"}}</small>
-                                        </span>
-                                    </div>
-                                </li>
-                                <hr>
-                                {% endif %}
-                                {% endfor %}
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-        
-            </div>
-        </div>
-        </div>
-    </div>
-    <!-- Comment END -->
-    {% else %}
-    <h4 class="text-center text-muted">For commenting please sign in</h4>
-    {% endif %}
 
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
