@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .models import Product, Comment
+from .models import Product, Comment, Clothes,ClotheCategory
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -9,6 +9,11 @@ from django.contrib.auth.decorators import login_required
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return render(request, 'pages/product_detail.html', {'product': product})
+
+
+def clothe_detail(request, product_id):
+    clothe = get_object_or_404(Clothes, id=product_id)
+    return render(request, 'pages/clothes_detail.html', {'clothe': clothe})
 
 
 @login_required(login_url='login')

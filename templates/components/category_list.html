@@ -1,5 +1,7 @@
 <div class="container-fluid pt-5">
-    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Electronic</span></h2>
+    {% if categories %}
+    
     <div class="row px-xl-5 pb-3">
         {% for category in categories %}
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
@@ -10,11 +12,36 @@
                     </div>
                     <div class="flex-fill pl-3">
                         <h6>{{category.name}}</h6>
-                        <small class="text-body">100 Products</small>
+                        <small class="text-body">{{ category.product_set.count }} Products</small>
                     </div>
                 </div>
             </a>
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <h2 class="section-title text-center"><span class="bg-secondary pr-3" style="color:#2E3F7F">No category in this section</span></h2>
+    {% endif %}
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Clothes</span></h2>
+    {% if clotheCategory %}
+    <div class="row px-xl-5 pb-3">
+        {% for clothcat in clotheCategory %}
+        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+            <a class="text-decoration-none" href="{% url 'main:clotheCategory' clothcat.title %}">
+                <div class="cat-item d-flex align-items-center mb-4">
+                    <div class="overflow-hidden" style="width: 100px; height: 100px;">
+                        <img class="img-fluid" src="{{clothcat.image.url}}" alt="">
+                    </div>
+                    <div class="flex-fill pl-3">
+                        <h6>{{clothcat.title}}</h6>
+                        <small class="text-body">{{ clothcat.clothes_set.count }} Products</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h2 class="section-title text-center"><span class="bg-secondary pr-3" style="color:#2E3F7F">No category in this section</span></h2>
+    {% endif %}
 </div>
